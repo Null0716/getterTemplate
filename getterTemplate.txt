@@ -1,0 +1,24 @@
+#if($field.modifierStatic)
+static ##
+#end
+$field.type ##
+#set($name = $StringUtil.capitalizeWithJavaBeanConvention($StringUtil.sanitizeJavaIdentifier($helper.getPropertyName($field, $project))))
+#if ($field.boolean && $field.primitive)
+    #if ($StringUtil.startsWithIgnoreCase($name, 'is'))
+        #set($name = $StringUtil.decapitalize($name))
+    #else
+    is##
+    #end
+#else
+get##
+#end
+${name}() {
+//auto generate by null
+return #if($field.String) $field.name==null?"" :$field.name;
+#elseif($field.Boolean) $field.name==null?false :$field.name;
+#elseif($field.StringArray) $field.name==null?new $field.type{} :$field.name;
+#elseif($field.Numeric) $field.name==null?0 :$field.name;
+#elseif($field.Double) $field.name==null?0.0 :$field.name;
+#else $field.name==null?new $field.type () :$field.name;
+#end
+}
