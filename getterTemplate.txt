@@ -13,7 +13,6 @@ $field.type ##
 get##
 #end
 ${name}() {
-//auto generate by null
 return #if($field.String) $field.name==null||$field.name .length()==0?"" :$field.name;
 #elseif($field.Boolean) $field.name==null?false :$field.name;
 #elseif($field.StringArray) $field.name==null?new $field.type{} :$field.name;
